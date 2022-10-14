@@ -33,6 +33,8 @@ let rand;
 // Palabra oculta
 let oculta = [];
 
+
+
 // mensaje final
 let msgfinal = document.getElementById("msg-final")
 
@@ -185,6 +187,7 @@ function inicio() {
 // Iniciar
 window.onload = inicio();
 
+// Boton reset
 function otraPalabra() {
   document.getElementById("image"+0).className += "fade-in"
   window.location.reload()
@@ -206,5 +209,4 @@ function mostrarPalabra() {
     }
     }, 2000);
     }
-  
 
