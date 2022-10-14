@@ -74,9 +74,9 @@ let divAbc = document.getElementById("abcdario")
 function generaPalabra() {
   rand = (Math.random() * 18).toFixed(0);
   palabra = palabras[rand][0].toUpperCase();
-  console.log(palabra);
-  btnPista.style.display = "inline"
-  btnMostrarPalabra.style.display = "inline"
+  btnPista.style.display = "inline";
+  btnMostrarPalabra.style.display = "inline";
+  console.log(palabra)
 }
 
 // Funcion para pintar los guiones de la palabra
@@ -90,14 +90,14 @@ function pintarGuiones(num) {
 
 //Generar abecedario
 function generaABC (a,z) {
-  divAbc.innerHTML = "";
-  let i = a.charCodeAt(0), j = z.charCodeAt(0);
-  let letra = "";
+  document.getElementById("abcdario").innerHTML = "";
+  var i = a.charCodeAt(0), j = z.charCodeAt(0);
+  var letra = "";
   for( ; i<=j; i++) {
     letra = String.fromCharCode(i).toUpperCase();
-    divAbc.innerHTML += "<button value='" + letra + "' onclick='intento(\"" + letra + "\")' class='letra' id='"+letra+"'>" + letra + "</button>";
+    document.getElementById("abcdario").innerHTML += "<button value='" + letra + "' onclick='intento(\"" + letra + "\")' class='letra' id='"+letra+"'>" + letra + "</button>";
     if(i==110) {
-      divAbc.innerHTML += "<button value='Ñ' onclick='intento(\"Ñ\")' class='letra' id='Ñ'>Ñ</button>";
+      document.getElementById("abcdario").innerHTML += "<button value='Ñ' onclick='intento(\"Ñ\")' class='letra' id='Ñ'>Ñ</button>";
     }
   }
 }
@@ -134,7 +134,6 @@ function pista() {
   setTimeout( function() {
     spanHueco.innerHTML = ""
   },4000)
-  console.log(msgfinal)
   }
   
 // Compruba si ha finalizado
@@ -147,13 +146,20 @@ function compruebaFin() {
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].disabled = true;
     }
-    btnInicio.innerHTML = "Jugar de nuevo";
+    btnInicio.style.display = "none";
+    btnPista.style.display = "none";
+    btnMostrarPalabra.style.display = "none";
     setTimeout(function (){
       if (confirm("Jugar de nuevo? ")){
         window.location.reload()
     }
     }, 2000);
   }else if( cont == 0 ) {
+    hueco.innerHTML = palabras[rand][0];
+    btnInicio.style.display = "none";
+    btnPista.style.display = "none";
+    btnMostrarPalabra.style.display = "none";
+    spanHueco.style.display = "none";
     msgfinal.innerHTML = "Game Over";
     msgfinal.className += "zoom-in";
     for (let i = 0; i < buttons.length; i++) {
@@ -171,16 +177,18 @@ function compruebaFin() {
 // Restablecer juego
 function inicio() {
   generaPalabra();
-  pintarGuiones(palabra.length);
+  pintarGuiones(palabra.length)
   generaABC("a","z");
-  cont = 6;
-  spanIntentos.innerHTML=cont;
-  // spanHueco = "";
+  spanIntentos.innerHTML= 6;
+  document.getElementById("image"+6).className += "fade-in"
 }
-
 // Iniciar
 window.onload = inicio();
 
+function otraPalabra() {
+  document.getElementById("image"+0).className += "fade-in"
+  window.location.reload()
+}
 
 //Obtener Palabra
 function mostrarPalabra() {
@@ -188,8 +196,10 @@ function mostrarPalabra() {
   msgfinal.innerHTML = "Ud se ha rendido <br> Game Over";
   msgfinal.className += "zoom-in";
   spanIntentos.innerHTML = "😥";
+  btnInicio.style.display = "none";
   btnPista.style.display = "none";
   btnMostrarPalabra.style.display = "none";
+  document.getElementById("image"+0).className += "fade-in"
     setTimeout(function (){
       if (confirm("Jugar de nuevo? ")){
         window.location.reload()
